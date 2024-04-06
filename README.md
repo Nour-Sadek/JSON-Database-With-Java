@@ -8,47 +8,64 @@ A JSON database is simulated using a map object in the server side where informa
 
 Arguments passed by the client through command-line arguments should follow the following format:
 
--t [type of request] -k "[key]" -v "[value associated with the key]"
+-t [type of request] -k [key] -v "[value associated with the key]"
+
 -t is the type of the request (either set, get, delete, or exit). -k is the key (in case of set, get, or delete). -v is the value to save in the database (in case of set only).
 
 Example:
 
 Starting the server:
-> java Main
-Server started!
+
+    > java Main
+    Server started!
 
 Starting the clients:
-> java Main -t get -k 1
-Client started!
-Sent: {"type":"get","key":"1"}
-Received: {"response":"ERROR","reason":"No such key"}
 
-> java Main -t set -k 1 -v HelloWorld!
-Client started!
-Sent: {"type":"set","key":"1","value":"HelloWorld!"}
-Received: {"response":"OK"}
+Client 1:
 
-> java Main -t get -k 1
-Client started!
-Sent: {"type":"get","key":"1"}
-Received: {"response":"OK","value":"HelloWorld!"}
+    > java Main -t get -k 1
+    Client started!
+    Sent: {"type":"get","key":"1"}
+    Received: {"response":"ERROR","reason":"No such key"}
 
-> java Main -t delete -k 1
-Client started!
-Sent: {"type":"delete","key":"1"}
-Received: {"response":"OK"}
+Client 2:
 
-> java Main -t delete -k 1
-Client started!
-Sent: {"type":"delete","key":"1"}
-Received: {"response":"ERROR","reason":"No such key"}
+    > java Main -t set -k 1 -v HelloWorld!
+    Client started!
+    Sent: {"type":"set","key":"1","value":"HelloWorld!"}
+    Received: {"response":"OK"}
 
-> java Main -t get -k 1
-Client started!
-Sent: {"type":"get","key":"1"}
-Received: {"response":"ERROR","reason":"No such key"}
+Client 3:
 
-> java Main -t exit
-Client started!
-Sent: {"type":"exit"}
-Received: {"response":"OK"}
+    > java Main -t get -k 1
+    Client started!
+    Sent: {"type":"get","key":"1"}
+    Received: {"response":"OK","value":"HelloWorld!"}
+
+Client 4:
+
+    > java Main -t delete -k 1
+    Client started!
+    Sent: {"type":"delete","key":"1"}
+    Received: {"response":"OK"}
+
+Client 5:
+
+    > java Main -t delete -k 1
+    Client started!
+    Sent: {"type":"delete","key":"1"}
+    Received: {"response":"ERROR","reason":"No such key"}
+
+Client 6:
+
+    > java Main -t get -k 1
+    Client started!
+    Sent: {"type":"get","key":"1"}
+    Received: {"response":"ERROR","reason":"No such key"}
+
+Client 7:
+
+    > java Main -t exit
+    Client started!
+    Sent: {"type":"exit"}
+    Received: {"response":"OK"}
